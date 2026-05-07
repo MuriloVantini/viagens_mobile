@@ -1,10 +1,28 @@
 import 'package:flutter/material.dart';
 
 ThemeData buildAppTheme() {
-  const seed = Color(0xFF1E3A5F);
+  const seed = Color(0xFF1B3C59);
+  const surface = Color(0xFFF4F1EC);
   return ThemeData(
-    colorScheme: ColorScheme.fromSeed(seedColor: seed),
+    outlinedButtonTheme: OutlinedButtonThemeData(
+      style: OutlinedButton.styleFrom(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        foregroundColor: seed,
+        side: const BorderSide(color: seed),
+      ),
+    ),
+    colorScheme: ColorScheme.fromSeed(seedColor: seed, surface: surface),
     useMaterial3: true,
+    scaffoldBackgroundColor: surface,
+    appBarTheme: const AppBarTheme(
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      foregroundColor: Color(0xFF102A3B),
+    ),
+    floatingActionButtonTheme: const FloatingActionButtonThemeData(
+      backgroundColor: Color(0xFF102A3B),
+      foregroundColor: Colors.white,
+    ),
     inputDecorationTheme: const InputDecorationTheme(
       border: OutlineInputBorder(),
     ),
