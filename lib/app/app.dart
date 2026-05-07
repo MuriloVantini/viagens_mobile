@@ -72,6 +72,7 @@ class ViagensApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'Viagens',
+        debugShowCheckedModeBanner: false,
         theme: buildAppTheme(),
         onGenerateRoute: AppRoutes.onGenerateRoute,
         home: const AuthGate(),
