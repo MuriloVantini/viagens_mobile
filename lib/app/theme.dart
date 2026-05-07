@@ -18,10 +18,10 @@ ThemeData buildAppTheme() {
     appBarTheme: const AppBarTheme(
       backgroundColor: Colors.transparent,
       elevation: 0,
-      foregroundColor: Color(0xFF102A3B),
+      foregroundColor: Color(0xFF0B7340),
     ),
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
-      backgroundColor: Color(0xFF102A3B),
+      backgroundColor: Color.fromARGB(255, 8, 88, 49),
       foregroundColor: Colors.white,
     ),
     inputDecorationTheme: const InputDecorationTheme(
