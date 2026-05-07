@@ -48,12 +48,15 @@ class _TripDetailScreenState extends State<TripDetailScreen> {
             padding: const EdgeInsets.all(24),
             children: [
               _DetailRow(label: 'Destino', value: trip.destino),
-              _DetailRow(label: 'Data ida', value: shortDate.format(trip.dataIda)),
-              _DetailRow(label: 'Data volta', value: shortDate.format(trip.dataVolta)),
+              _DetailPairRow(
+                startLabel: 'Data de ida',
+                startValue: shortDate.format(trip.dataIda),
+                endLabel: 'Data de retorno',
+                endValue: shortDate.format(trip.dataVolta),
+              ),
               _DetailRow(label: 'Finalidade', value: tripPurposeLabel(trip.finalidade)),
               _DetailRow(label: 'Transporte', value: tripTransportLabel(trip.transporte)),
               if (trip.observacoes != null && trip.observacoes!.isNotEmpty) _DetailRow(label: 'Observacoes', value: trip.observacoes!),
-              _DetailRow(label: 'Status', value: tripStatusLabel(trip.status)),
               const SizedBox(height: 12),
               Align(
                 alignment: Alignment.centerLeft,
@@ -87,6 +90,55 @@ class _DetailRow extends StatelessWidget {
           Text(value, style: Theme.of(context).textTheme.bodyLarge),
         ],
       ),
+    );
+  }
+}
+
+class _DetailPairRow extends StatelessWidget {
+  const _DetailPairRow({
+    required this.startLabel,
+    required this.startValue,
+    required this.endLabel,
+    required this.endValue,
+  });
+
+  final String startLabel;
+  final String startValue;
+  final String endLabel;
+  final String endValue;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 12),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Flexible(child: _DetailColumn(label: startLabel, value: startValue)),
+          const SizedBox(width: 16),
+          Flexible(child: _DetailColumn(label: endLabel, value: endValue)),
+        ],
+      ),
+    );
+  }
+}
+
+class _DetailColumn extends StatelessWidget {
+  const _DetailColumn({required this.label, required this.value});
+
+  final String label;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(label, style: Theme.of(context).textTheme.labelMedium),
+        const SizedBox(height: 4),
+        Text(value, style: Theme.of(context).textTheme.bodyLarge),
+      ],
     );
   }
 }
