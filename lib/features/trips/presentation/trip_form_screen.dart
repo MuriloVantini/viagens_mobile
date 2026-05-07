@@ -30,7 +30,12 @@ class _TripFormScreenState extends State<TripFormScreen> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => context.read<DomainsController>().load());
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) {
+        return;
+      }
+      context.read<DomainsController>().load();
+    });
   }
 
   @override
