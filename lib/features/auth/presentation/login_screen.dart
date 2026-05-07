@@ -26,10 +26,7 @@ class _LoginScreenState extends State<LoginScreen> {
       return;
     }
     final auth = context.read<AuthController>();
-    await auth.login(
-      username: _userController.text.trim(),
-      password: _passwordController.text,
-    );
+    await auth.login(username: _userController.text.trim(), password: _passwordController.text);
   }
 
   @override
@@ -56,6 +53,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           if (value == null || value.trim().isEmpty) {
                             return 'Informe o usuario';
                           }
+                          if (auth.error != null) {
+                            return auth.error;
+                          }
                           return null;
                         },
                       ),
@@ -68,29 +68,14 @@ class _LoginScreenState extends State<LoginScreen> {
                           if (value == null || value.isEmpty) {
                             return 'Informe a senha';
                           }
+                          if (auth.error != null) {
+                            return auth.error;
+                          }
                           return null;
                         },
                       ),
                       const SizedBox(height: 24),
-                      ElevatedButton(
-                        onPressed: auth.isLoading ? null : _submit,
-                        child: auth.isLoading
-                            ? const SizedBox(
-                                height: 18,
-                                width: 18,
-                                child: CircularProgressIndicator(strokeWidth: 2),
-                              )
-                            : const Text('Entrar'),
-                      ),
-                      if (auth.error != null) ...[
-                        const SizedBox(height: 16),
-                        Text(
-                          auth.error!,
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.error,
-                          ),
-                        ),
-                      ],
+                      auth.isLoading ? const Center(child: CircularProgressIndicator()) : ElevatedButton(onPressed: auth.isLoading ? null : _submit, child: const Text('Entrar')),
                     ],
                   ),
                 );
