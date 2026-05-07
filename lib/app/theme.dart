@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 ThemeData buildAppTheme() {
-  const seed = Color(0xFF1B3C59);
+  const seed = Color(0xFF0B7340);
   const surface = Color(0xFFF4F1EC);
   return ThemeData(
     outlinedButtonTheme: OutlinedButtonThemeData(
