@@ -118,7 +118,7 @@ class _TripFormScreenState extends State<TripFormScreen> {
                   children: [
                     Text(domains.error ?? 'Erro ao carregar dominios'),
                     const SizedBox(height: 12),
-                    ElevatedButton(onPressed: domains.load, child: const Text('Tentar novamente')),
+                    OutlinedButton(onPressed: domains.load, child: const Text('Tentar novamente')),
                   ],
                 ),
               ),
@@ -179,7 +179,7 @@ class _TripFormScreenState extends State<TripFormScreen> {
                       maxLines: 3,
                     ),
                     const SizedBox(height: 24),
-                    ElevatedButton(
+                    OutlinedButton(
                       onPressed: _isSaving ? null : _submit,
                       child: _isSaving ? const SizedBox(height: 18, width: 18, child: CircularProgressIndicator(strokeWidth: 2)) : const Text('Criar viagem'),
                     ),

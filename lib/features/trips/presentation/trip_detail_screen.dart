@@ -104,13 +104,13 @@ class _ActionButtons extends StatelessWidget {
     switch (status) {
       case TripStatus.agendada:
         buttons = [
-          ElevatedButton(onPressed: isUpdating ? null : () => onUpdate(TripStatus.emAndamento), child: const Text('Iniciar viagem')),
+          OutlinedButton(onPressed: isUpdating ? null : () => onUpdate(TripStatus.emAndamento), child: const Text('Iniciar viagem')),
           TextButton(onPressed: isUpdating ? null : () => onUpdate(TripStatus.cancelada), child: const Text('Cancelar')),
         ];
         break;
       case TripStatus.emAndamento:
         buttons = [
-          ElevatedButton(onPressed: isUpdating ? null : () => onUpdate(TripStatus.concluida), child: const Text('Concluir')),
+          OutlinedButton(onPressed: isUpdating ? null : () => onUpdate(TripStatus.concluida), child: const Text('Concluir')),
           TextButton(onPressed: isUpdating ? null : () => onUpdate(TripStatus.cancelada), child: const Text('Cancelar')),
         ];
         break;

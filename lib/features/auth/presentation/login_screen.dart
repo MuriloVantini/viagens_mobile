@@ -84,7 +84,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       const SizedBox(height: 24),
                       auth.isLoading
                           ? const Center(child: CircularProgressIndicator())
-                          : ElevatedButton(
+                          : OutlinedButton(
                               onPressed: _submit,
                               child: const Text('Entrar'),
                             ),

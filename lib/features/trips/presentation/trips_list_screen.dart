@@ -112,7 +112,7 @@ class _EmptyState extends StatelessWidget {
           children: [
             const Text('Nenhuma viagem encontrada'),
             const SizedBox(height: 16),
-            ElevatedButton(onPressed: onCreate, child: const Text('Nova viagem')),
+            OutlinedButton(onPressed: onCreate, child: const Text('Nova viagem')),
           ],
         ),
       ),
@@ -136,7 +136,7 @@ class _ErrorState extends StatelessWidget {
           children: [
             Text(message, textAlign: TextAlign.center),
             const SizedBox(height: 16),
-            ElevatedButton(onPressed: onRetry, child: const Text('Tentar novamente')),
+            OutlinedButton(onPressed: onRetry, child: const Text('Tentar novamente')),
           ],
         ),
       ),
