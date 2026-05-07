@@ -21,8 +21,7 @@ class _TripFormScreenState extends State<TripFormScreen> {
   final _formKey = GlobalKey<FormState>();
   final _destinoController = TextEditingController();
   final _observacoesController = TextEditingController();
-  DateTime? _dataIda;
-  DateTime? _dataVolta;
+  DateTimeRange? _periodo;
   TripPurpose? _finalidade;
   TripTransport? _transporte;
   bool _isSaving = false;
@@ -45,26 +44,25 @@ class _TripFormScreenState extends State<TripFormScreen> {
     super.dispose();
   }
 
-  Future<void> _pickDate({required bool isIda}) async {
-    final initialDate = isIda ? _dataIda ?? DateTime.now() : _dataVolta ?? _dataIda ?? DateTime.now();
+  Future<void> _pickDateRange() async {
+    final now = DateTime.now();
+    final initialRange = _periodo ?? DateTimeRange(start: now, end: now.add(const Duration(days: 1)));
     final firstDate = DateTime(2020);
     final lastDate = DateTime(2100);
 
-    final selected = await showDatePicker(context: context, initialDate: initialDate, firstDate: firstDate, lastDate: lastDate);
+    final selected = await showDateRangePicker(
+      context: context,
+      initialDateRange: initialRange,
+      firstDate: firstDate,
+      lastDate: lastDate,
+    );
 
     if (selected == null) {
       return;
     }
 
     setState(() {
-      if (isIda) {
-        _dataIda = selected;
-        if (_dataVolta != null && _dataVolta!.isBefore(_dataIda!)) {
-          _dataVolta = null;
-        }
-      } else {
-        _dataVolta = selected;
-      }
+      _periodo = selected;
     });
   }
 
@@ -72,20 +70,16 @@ class _TripFormScreenState extends State<TripFormScreen> {
     if (!_formKey.currentState!.validate()) {
       return;
     }
-    if (_dataIda == null || _dataVolta == null) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Informe as datas de ida e volta')));
-      return;
-    }
-    if (_dataVolta!.isBefore(_dataIda!)) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Data de volta deve ser apos a ida')));
+    if (_periodo == null) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Informe o periodo da viagem')));
       return;
     }
     setState(() => _isSaving = true);
 
     final input = TripCreateInput(
       destino: _destinoController.text.trim(),
-      dataIda: _dataIda!,
-      dataVolta: _dataVolta!,
+      dataIda: _periodo!.start,
+      dataVolta: _periodo!.end,
       finalidade: _finalidade!,
       transporte: _transporte!,
       observacoes: _observacoesController.text.trim(),
@@ -148,9 +142,7 @@ class _TripFormScreenState extends State<TripFormScreen> {
                       },
                     ),
                     const SizedBox(height: 16),
-                    _DateField(label: 'Data de ida', value: _dataIda, onTap: () => _pickDate(isIda: true)),
-                    const SizedBox(height: 16),
-                    _DateField(label: 'Data de volta', value: _dataVolta, onTap: () => _pickDate(isIda: false)),
+                    _DateRangeField(label: 'Periodo da viagem', value: _periodo, onTap: _pickDateRange),
                     const SizedBox(height: 16),
                     DropdownButtonFormField<TripPurpose>(
                       initialValue: _finalidade,
@@ -199,16 +191,18 @@ class _TripFormScreenState extends State<TripFormScreen> {
   }
 }
 
-class _DateField extends StatelessWidget {
-  const _DateField({required this.label, required this.value, required this.onTap});
+class _DateRangeField extends StatelessWidget {
+  const _DateRangeField({required this.label, required this.value, required this.onTap});
 
   final String label;
-  final DateTime? value;
+  final DateTimeRange? value;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    final text = value == null ? 'Selecionar' : shortDate.format(value!);
+    final text = value == null
+        ? 'Selecionar'
+        : '${shortDate.format(value!.start)} - ${shortDate.format(value!.end)}';
     return InkWell(
       onTap: onTap,
       child: InputDecorator(
