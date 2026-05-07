@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:viagens_mobile/app/routes.dart';
-import 'package:viagens_mobile/core/date_formatters.dart';
 import 'package:viagens_mobile/core/load_state.dart';
 import 'package:viagens_mobile/domain/models/trip.dart';
 import 'package:viagens_mobile/features/auth/state/auth_controller.dart';
 import 'package:viagens_mobile/features/trips/presentation/trip_form_screen.dart';
 import 'package:viagens_mobile/features/trips/presentation/trip_detail_screen.dart';
-import 'package:viagens_mobile/features/trips/presentation/widgets/trip_status_chip.dart';
+import 'package:viagens_mobile/features/trips/presentation/widgets/trip_list_tile.dart';
 import 'package:viagens_mobile/features/trips/state/trips_controller.dart';
 
 class TripsListScreen extends StatefulWidget {
@@ -76,17 +75,7 @@ class _TripsListScreenState extends State<TripsListScreen> {
               itemCount: controller.trips.length,
               itemBuilder: (context, index) {
                 final trip = controller.trips[index];
-                return ListTile(
-                  onTap: () => _openDetail(trip),
-                  tileColor: Theme.of(context).colorScheme.surfaceContainerHighest,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                  title: Text(trip.destino),
-                  subtitle: Text(
-                    '${shortDate.format(trip.dataIda)} - '
-                    '${shortDate.format(trip.dataVolta)}',
-                  ),
-                  trailing: TripStatusChip(status: trip.status),
-                );
+                return TripListTile(trip: trip, onTap: () => _openDetail(trip));
               },
               separatorBuilder: (_, _) => const SizedBox(height: 12),
             ),
