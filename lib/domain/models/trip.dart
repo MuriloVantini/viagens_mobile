@@ -1,4 +1,6 @@
+import 'package:viagens_mobile/domain/models/trip_purpose.dart';
 import 'package:viagens_mobile/domain/models/trip_status.dart';
+import 'package:viagens_mobile/domain/models/trip_transport.dart';
 
 class Trip {
   Trip({
@@ -17,8 +19,8 @@ class Trip {
   final String destino;
   final DateTime dataIda;
   final DateTime dataVolta;
-  final String finalidade;
-  final String transporte;
+  final TripPurpose finalidade;
+  final TripTransport transporte;
   final String? observacoes;
   final TripStatus status;
   final DateTime criadoEm;
