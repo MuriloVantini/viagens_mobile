@@ -7,8 +7,9 @@ ThemeData buildAppTheme() {
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-        foregroundColor: seed,
-        side: const BorderSide(color: seed),
+        foregroundColor: Colors.white,
+        backgroundColor: seed,
+        minimumSize: const Size(100, 48),
       ),
     ),
     colorScheme: ColorScheme.fromSeed(seedColor: seed, surface: surface),
