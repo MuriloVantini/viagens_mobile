@@ -36,8 +36,8 @@ String tripTransportLabel(TripTransport transport) {
   return const {
     TripTransport.carroProprio: 'Carro próprio',
     TripTransport.carroEmpresa: 'Carro da empresa',
-    TripTransport.aereo: 'Aereo',
-    TripTransport.onibus: 'Onibus',
+    TripTransport.aereo: 'Aéreo',
+    TripTransport.onibus: 'Ônibus',
   }[transport]!;
 }
 

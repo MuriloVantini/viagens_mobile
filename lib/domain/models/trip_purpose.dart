@@ -36,8 +36,8 @@ String tripPurposeToApi(TripPurpose purpose) {
 
 String tripPurposeLabel(TripPurpose purpose) {
   return const {
-    TripPurpose.visitaTecnica: 'Visita tecnica',
-    TripPurpose.reuniao: 'Reuniao',
+    TripPurpose.visitaTecnica: 'Visita técnica',
+    TripPurpose.reuniao: 'Reunião',
     TripPurpose.treinamento: 'Treinamento',
     TripPurpose.entrega: 'Entrega',
     TripPurpose.outro: 'Outro',
