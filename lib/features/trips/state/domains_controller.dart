@@ -2,6 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:viagens_mobile/core/load_state.dart';
 import 'package:viagens_mobile/data/api/api_exception.dart';
 import 'package:viagens_mobile/domain/contracts/domains_repository.dart';
+import 'package:viagens_mobile/domain/models/trip_purpose.dart';
+import 'package:viagens_mobile/domain/models/trip_transport.dart';
 
 class DomainsController extends ChangeNotifier {
   DomainsController({required this.domainsRepository});
@@ -10,13 +12,13 @@ class DomainsController extends ChangeNotifier {
 
   LoadState _state = LoadState.idle;
   String? _error;
-  List<String> _finalidades = [];
-  List<String> _transportes = [];
+  List<TripPurpose> _finalidades = [];
+  List<TripTransport> _transportes = [];
 
   LoadState get state => _state;
   String? get error => _error;
-  List<String> get finalidades => List.unmodifiable(_finalidades);
-  List<String> get transportes => List.unmodifiable(_transportes);
+  List<TripPurpose> get finalidades => List.unmodifiable(_finalidades);
+  List<TripTransport> get transportes => List.unmodifiable(_transportes);
 
   Future<void> load() async {
     if (_state == LoadState.loading || _state == LoadState.success) {
@@ -26,12 +28,9 @@ class DomainsController extends ChangeNotifier {
     _error = null;
     notifyListeners();
     try {
-      final results = await Future.wait([
-        domainsRepository.fetchFinalidades(),
-        domainsRepository.fetchTransportes(),
-      ]);
-      _finalidades = results[0];
-      _transportes = results[1];
+      final results = await Future.wait([domainsRepository.fetchFinalidades(), domainsRepository.fetchTransportes()]);
+      _finalidades = results[0] as List<TripPurpose>;
+      _transportes = results[1] as List<TripTransport>;
       _state = LoadState.success;
     } catch (error) {
       _state = LoadState.error;
