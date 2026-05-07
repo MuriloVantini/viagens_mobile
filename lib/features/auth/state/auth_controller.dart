@@ -41,7 +41,6 @@ class AuthController extends ChangeNotifier {
       _isAuthenticated = true;
       return true;
     } on ApiException catch (error) {
-      print("caiu no ApiException catch do login");
       _error = error.message;
       _isAuthenticated = false;
       return false;
@@ -49,6 +48,14 @@ class AuthController extends ChangeNotifier {
       _isLoading = false;
       notifyListeners();
     }
+  }
+
+  void clearError() {
+    if (_error == null) {
+      return;
+    }
+    _error = null;
+    notifyListeners();
   }
 
   Future<void> logout() async {

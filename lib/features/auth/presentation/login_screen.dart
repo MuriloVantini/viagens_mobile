@@ -22,11 +22,16 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> _submit() async {
+    final auth = context.read<AuthController>();
+    auth.clearError();
     if (!_formKey.currentState!.validate()) {
       return;
     }
-    final auth = context.read<AuthController>();
-    await auth.login(username: _userController.text.trim(), password: _passwordController.text);
+    final success = await auth.login(username: _userController.text.trim(), password: _passwordController.text);
+
+    if (!success && mounted) {
+      setState(() {});
+    }
   }
 
   @override
@@ -48,13 +53,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       TextFormField(
                         controller: _userController,
                         textInputAction: TextInputAction.next,
-                        decoration: const InputDecoration(labelText: 'Usuario'),
+                        decoration: InputDecoration(
+                          labelText: 'Usuário',
+                          errorText: auth.error,
+                        ),
+                        onChanged: (_) => context.read<AuthController>().clearError(),
                         validator: (value) {
                           if (value == null || value.trim().isEmpty) {
                             return 'Informe o usuario';
-                          }
-                          if (auth.error != null) {
-                            return auth.error;
                           }
                           return null;
                         },
@@ -63,19 +69,25 @@ class _LoginScreenState extends State<LoginScreen> {
                       TextFormField(
                         controller: _passwordController,
                         obscureText: true,
-                        decoration: const InputDecoration(labelText: 'Senha'),
+                        decoration: InputDecoration(
+                          labelText: 'Senha',
+                          errorText: auth.error,
+                        ),
+                        onChanged: (_) => context.read<AuthController>().clearError(),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Informe a senha';
-                          }
-                          if (auth.error != null) {
-                            return auth.error;
                           }
                           return null;
                         },
                       ),
                       const SizedBox(height: 24),
-                      auth.isLoading ? const Center(child: CircularProgressIndicator()) : ElevatedButton(onPressed: auth.isLoading ? null : _submit, child: const Text('Entrar')),
+                      auth.isLoading
+                          ? const Center(child: CircularProgressIndicator())
+                          : ElevatedButton(
+                              onPressed: _submit,
+                              child: const Text('Entrar'),
+                            ),
                     ],
                   ),
                 );
