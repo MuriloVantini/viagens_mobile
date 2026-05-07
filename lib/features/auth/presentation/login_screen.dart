@@ -49,15 +49,26 @@ class _LoginScreenState extends State<LoginScreen> {
                   key: _formKey,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
+                    spacing: 16,
                     children: [
+                      SizedBox(height: 120, child: Image.asset('assets/images/agt_logo.png', fit: BoxFit.contain)),
+                      const SizedBox(height: 16),
+                      Text(
+                        'App de Viagens',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 28, fontWeight: FontWeight.normal, color: Theme.of(context).colorScheme.primary, shadows: [
+                          Shadow(
+                            color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.4),
+                            offset: const Offset(0, 3),
+                            blurRadius: 6,
+                          ),
+                        ]),
+                      ),
+                      const SizedBox(height: 8),
                       TextFormField(
                         controller: _userController,
                         textInputAction: TextInputAction.next,
-                        decoration: InputDecoration(
-                          prefixIcon: const Icon(Icons.person),
-                          labelText: 'Usuário',
-                          errorText: auth.error,
-                        ),
+                        decoration: InputDecoration(prefixIcon: const Icon(Icons.person), labelText: 'Usuário', errorText: auth.error),
                         onChanged: (_) => context.read<AuthController>().clearError(),
                         validator: (value) {
                           if (value == null || value.trim().isEmpty) {
@@ -66,15 +77,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           return null;
                         },
                       ),
-                      const SizedBox(height: 16),
                       TextFormField(
                         controller: _passwordController,
                         obscureText: true,
-                        decoration: InputDecoration(
-                          prefixIcon: const Icon(Icons.lock),
-                          labelText: 'Senha',
-                          errorText: auth.error,
-                        ),
+                        decoration: InputDecoration(prefixIcon: const Icon(Icons.lock), labelText: 'Senha', errorText: auth.error),
                         onChanged: (_) => context.read<AuthController>().clearError(),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -83,13 +89,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           return null;
                         },
                       ),
-                      const SizedBox(height: 24),
-                      auth.isLoading
-                          ? const Center(child: CircularProgressIndicator())
-                          : OutlinedButton(
-                              onPressed: _submit,
-                              child: const Text('Entrar'),
-                            ),
+                      const SizedBox(height: 8),
+                      auth.isLoading ? const Center(child: CircularProgressIndicator()) : OutlinedButton(onPressed: _submit, child: const Text('Entrar')),
                     ],
                   ),
                 );
