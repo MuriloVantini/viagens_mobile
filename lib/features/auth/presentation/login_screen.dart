@@ -54,6 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         controller: _userController,
                         textInputAction: TextInputAction.next,
                         decoration: InputDecoration(
+                          prefixIcon: const Icon(Icons.person),
                           labelText: 'Usuário',
                           errorText: auth.error,
                         ),
@@ -70,6 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         controller: _passwordController,
                         obscureText: true,
                         decoration: InputDecoration(
+                          prefixIcon: const Icon(Icons.lock),
                           labelText: 'Senha',
                           errorText: auth.error,
                         ),
