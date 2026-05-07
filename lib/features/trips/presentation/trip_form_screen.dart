@@ -139,7 +139,7 @@ class _TripFormScreenState extends State<TripFormScreen> {
                   children: [
                     TextFormField(
                       controller: _destinoController,
-                      decoration: const InputDecoration(labelText: 'Destino'),
+                      decoration: const InputDecoration(labelText: 'Destino', prefixIcon: Icon(Icons.location_on)),
                       validator: (value) {
                         if (value == null || value.trim().isEmpty) {
                           return 'Informe o destino';
@@ -155,7 +155,7 @@ class _TripFormScreenState extends State<TripFormScreen> {
                     DropdownButtonFormField<TripPurpose>(
                       initialValue: _finalidade,
                       items: domains.finalidades.map((item) => DropdownMenuItem(value: item, child: Text(tripPurposeLabel(item)))).toList(),
-                      decoration: const InputDecoration(labelText: 'Finalidade'),
+                      decoration: const InputDecoration(labelText: 'Finalidade', prefixIcon: Icon(Icons.description)),
                       onChanged: (value) => setState(() => _finalidade = value),
                       validator: (value) {
                         if (value == null) {
@@ -168,7 +168,7 @@ class _TripFormScreenState extends State<TripFormScreen> {
                     DropdownButtonFormField<TripTransport>(
                       initialValue: _transporte,
                       items: domains.transportes.map((item) => DropdownMenuItem(value: item, child: Text(tripTransportLabel(item)))).toList(),
-                      decoration: const InputDecoration(labelText: 'Transporte'),
+                      decoration: InputDecoration(labelText: 'Transporte', prefixIcon: Icon(tripTransportIcon(_transporte ?? TripTransport.carroProprio))),
                       onChanged: (value) => setState(() => _transporte = value),
                       validator: (value) {
                         if (value == null) {
@@ -180,7 +180,7 @@ class _TripFormScreenState extends State<TripFormScreen> {
                     const SizedBox(height: 16),
                     TextFormField(
                       controller: _observacoesController,
-                      decoration: const InputDecoration(labelText: 'Observacoes'),
+                      decoration: const InputDecoration(labelText: 'Observacoes', prefixIcon: Icon(Icons.note)),
                       maxLines: 3,
                     ),
                     const SizedBox(height: 24),
@@ -212,7 +212,7 @@ class _DateField extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: InputDecorator(
-        decoration: InputDecoration(labelText: label),
+        decoration: InputDecoration(labelText: label, prefixIcon: Icon(Icons.calendar_today_outlined)),
         child: Text(text),
       ),
     );
