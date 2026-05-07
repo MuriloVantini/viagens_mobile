@@ -40,12 +40,9 @@ class AuthController extends ChangeNotifier {
       await authRepository.login(username: username, password: password);
       _isAuthenticated = true;
       return true;
-    } catch (error) {
-      if (error is ApiException) {
-        _error = error.message;
-      } else {
-        _error = 'Falha ao autenticar';
-      }
+    } on ApiException catch (error) {
+      print("caiu no ApiException catch do login");
+      _error = error.message;
       _isAuthenticated = false;
       return false;
     } finally {
