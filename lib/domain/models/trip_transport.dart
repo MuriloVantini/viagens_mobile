@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:viagens_mobile/core/string_normalizer.dart';
 
 enum TripTransport {
@@ -33,9 +34,18 @@ String tripTransportToApi(TripTransport transport) {
 
 String tripTransportLabel(TripTransport transport) {
   return const {
-    TripTransport.carroProprio: 'Carro proprio',
+    TripTransport.carroProprio: 'Carro próprio',
     TripTransport.carroEmpresa: 'Carro da empresa',
     TripTransport.aereo: 'Aereo',
     TripTransport.onibus: 'Onibus',
+  }[transport]!;
+}
+
+IconData tripTransportIcon(TripTransport transport) {
+  return const {
+    TripTransport.carroProprio: Icons.directions_car,
+    TripTransport.carroEmpresa: Icons.directions_car_filled,
+    TripTransport.aereo: Icons.airplanemode_active,
+    TripTransport.onibus: Icons.directions_bus,
   }[transport]!;
 }
